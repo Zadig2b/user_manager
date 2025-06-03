@@ -35,9 +35,16 @@ public class UserServlet extends HttpServlet {
         user.setName(req.getParameter("name"));
         user.setEmail(req.getParameter("email"));
         user.setPhone(req.getParameter("phone"));
-        user.setDateNaissance(LocalDate.parse(req.getParameter("dateNaissance")));
+
+        String dateStr = req.getParameter("dateNaissance");
+        if (dateStr != null && !dateStr.isBlank()) {
+            user.setDateNaissance(LocalDate.parse(dateStr));
+        } else {
+            user.setDateNaissance(LocalDate.of(4545, 8, 18));
+        }
 
         dao.add(user);
         res.sendRedirect("users");
     }
+
 }
